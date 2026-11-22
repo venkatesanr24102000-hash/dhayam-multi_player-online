@@ -1,0 +1,14 @@
+{
+  "name": "dhayam-multiplayer",
+  "version": "2.0.0",
+  "description": "Dhayam board game with real-time online multiplayer rooms, reconnect and spectators",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node test/e2e.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": { "ws": "^8.18.0" },
+  "license": "UNLICENSED",
+  "private": true
+}

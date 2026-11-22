@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dhayam</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2a1050">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head><body>
+<audio id="dsnd" preload="auto" src="assets/audio/dice_roll.wav"></audio>
+<audio id="scr" preload="auto" src="assets/audio/capture.mp3"></audio>
+<div id="dcn"></div>
+<div class="s on" id="sp"><h1>DHAYAM</h1><div style="font-size:60px">🎲</div><div class="bar"><i></i></div><div>Loading…</div></div>
+
+<div class="s" id="hm"><h1>DHAYAM</h1><input id="nm" maxlength="12" placeholder="Your name">
+<button class="b g" onclick="setup('cpu')">🤖 Play vs Computer</button>
+<button class="b bl" onclick="setup('pass')">👥 Pass &amp; Play (Offline)</button>
+<button class="b p" onclick="online()">🌐 Play Online</button>
+<button class="b l" onclick="$('#ov').classList.add('on')">❓ How to play</button></div>
+
+<div class="s" id="su"><h2 id="sut"></h2><div>Coins per player</div><div class="row" id="np"></div>
+<div class="card" id="nms"></div><button class="b g" onclick="startLocal()">▶ Start</button><button class="b l" onclick="go('hm')">← Back</button></div>
+
+<div class="s" id="ol"><h2>Play Online</h2><div>Coins per player</div><div class="row" id="rn"></div>
+<button class="b g" onclick="createRoom()">Create room</button><div style="font-size:13px;opacity:.85">2 players (Red vs Blue) or 4 players (2 per team), plus up to 2 spectators. Pick your color in the room.</div><div>or join a friend’s room (players and spectators use the same room code)</div>
+<input id="jc" maxlength="5" placeholder="ROOM CODE" style="text-transform:uppercase;letter-spacing:4px">
+<button class="b bl" onclick="joinRoom()">Join room</button><div class="err" id="oe"></div><button class="b l" onclick="go('hm')">← Back</button></div>
+
+<div class="s" id="lb"><div>Room code — share with friends</div><div class="code" id="lc"></div>
+<div style="font-weight:700">Choose Your Coin Color</div>
+<div class="row"><div class="chip" id="cR" onclick="pick(0)">🔴 Red</div><div class="chip" id="cB" onclick="pick(1)">🔵 Blue</div></div>
+<div class="chip wide" id="cS" onclick="pick(-1)">👁 Spectate</div>
+<div class="card" id="ls"></div><div class="err" id="le"></div>
+<button class="b g" id="lst" onclick="hostStart()">▶ Start game</button><div id="lw" style="font-size:14px"></div><button class="b l" onclick="leave()">← Leave</button></div>
+
+<div class="s" id="gm" style="justify-content:flex-start;padding-top:8px;gap:8px"><div id="pl"></div><div id="bd"></div>
+<div id="ctl"><div id="dc" style="display:flex;flex-direction:column;gap:7px;perspective:520px"><div class="dv" id="d0" onclick="doThrow()"></div><div class="dv" id="d1" onclick="doThrow()"></div></div><div id="pool" class="row"></div></div>
+<div id="st"></div><button class="b l" style="padding:7px;width:130px;font-size:14px" onclick="if(confirm('Quit this game?'))leave()">✕ Quit</button></div>
+
+<div class="s" id="wn"><div style="font-size:80px">🏆</div><h2 id="wt"></h2><div id="rks" style="display:flex;flex-direction:column;gap:8px"></div>
+<button class="b g" id="pa" onclick="again()">↻ Play again</button><button class="b l" onclick="leave()">🏠 Home</button></div>
+
+<div id="ov" onclick="this.classList.remove('on')"><div class="card"><h2>How to play</h2>
+<div>🎲 Throw two sticks (0–3 each); add them. 0+0 counts as <b>12</b>. A 1, 5, 6 or 12 gives another throw; all values are kept to use in any order.</div>
+<div>🚪 First coin leaves base only on a <b>1</b>. If you have a coin in base and roll a 1 at any point in the turn, that 1 must be used first to bring a coin out — nothing else moves until then, and no other value can bring it out. With no 1 in the turn, a 5 can bring a coin out or move coins.</div><div>🔁 A coin may pass over or land on your own coin during the turn, but when the turn ends two of your coins can’t share a normal square, so only moves that allow a valid finish are offered.</div>
+<div>➡️ Move along your numbered path to 37, return along the opponent’s path (36→14), then 38 → 39–44 → your inner path to 56.</div>
+<div>🔒 Until you capture one opponent coin, none of your coins can move past the opponent’s square 20 on the return route. One capture, by any of your coins, unlocks all your coins.</div><div>🏆 If all your coins reach your own 38 safe place while the opponent has never captured, you win at once.</div>
+<div>💥 Landing on an opponent on a normal square sends it to base, and you get a bonus throw. ✕ squares block opponents. 44–56 are safe; if Red and Blue meet on 56 both go to base.</div>
+<div>🏁 From 56 you need exactly a 1 to enter the Finish circle. Finish all your coins first to win. You must move if a legal move exists.</div>
+<div>🥚 Before your first 1, a 5, 6 or 12 only gives another throw and is not kept as a movement value; the first 1 must bring your first coin out.</div><div>🏁 Home stretch: when you have a coin on squares 39–56, a value that cannot be used by any coin is simply left unused — the turn only passes when no value you have thrown allows any legal move for any coin.</div><div style="text-align:center;opacity:.7">tap to close</div></div></div>
+
+<script src="js/config.js"></script>
+<script src="js/board.js"></script>
+<script src="js/rules.js"></script>
+<script src="js/animation.js"></script>
+<script src="js/render.js"></script>
+<script src="js/game.js"></script>
+<script src="js/online.js"></script>
+<script>if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));</script>
+</body></html>
